@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -30,6 +31,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         if ($request->expectsJson()) {
+            if ($e instanceof Unique)
             if ($e->getCode() == 401) {
                 return response()->json([
                     'message' => 'Unauthorized',
@@ -50,6 +52,9 @@ class Handler extends ExceptionHandler
                     'message' => 'Internal Server Error',
                 ], 500);
             }
+        }
+        if ($e instanceof UnauthorizedHttpException) {
+            return redirect()->to('auth.login')->with('error', 'Unauthorized');
         }
         return parent::render($request, $e);
     }
