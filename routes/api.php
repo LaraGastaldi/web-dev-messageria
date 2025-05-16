@@ -10,8 +10,8 @@ Route::group([
     Route::post('me', [AuthController::class, 'me']);
 });
 
-Route::post('register', [AuthController::class, 'register']);
+Route::post('register', [UserController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout']);
 
-Route::post('refresh', [UserController::class, 'refresh']);
+Route::post('refresh', [AuthController::class, 'refresh']);

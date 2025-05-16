@@ -18,7 +18,7 @@ class BroadcastEvent implements ShouldBroadcast
 
   public function broadcastOn()
   {
-    return [env('PUSHER_PREFIX') . $this->on];
+    return [$this->on];
   }
 
   public function broadcastAs()

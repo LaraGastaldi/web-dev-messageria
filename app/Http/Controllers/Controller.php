@@ -12,7 +12,7 @@ abstract class Controller
 
     public function __call($method, $args)
     {
-        $result = $this->service->{$method}(...$args);
+        $result = $this->{$method}(...$args);
 
         if ($result instanceof \Illuminate\Http\Response) {
             return $result;
