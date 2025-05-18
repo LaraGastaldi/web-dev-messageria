@@ -24,7 +24,7 @@ abstract class Controller
             return response()->json($result);
         }
         if (is_a($result, Model::class)) {
-            return $this->resource::make($result);
+            return new $this->resource($result);
         }
     }
 }

@@ -21,6 +21,6 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withSingletons([
-        ExceptionHandler::class, Handler::class,
+        ExceptionHandler::class => Handler::class,
     ])
     ->create();
