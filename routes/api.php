@@ -8,6 +8,7 @@ Route::group([
     'middleware' => ['jwt.refresh'],
 ], function ($router) {
     Route::post('me', [AuthController::class, 'me']);
+    Route::patch('user/avatar', [UserController::class, 'updateAvatar']);
 });
 
 Route::post('register', [UserController::class, 'register'])->withMiddleware('throttle:10,1');

@@ -33,7 +33,7 @@ class UserController extends Controller
         ], 401);
     }
 
-    protected function updateProfilePic(Request $request)
+    protected function updateAvatar(Request $request)
     {
         $file = $request->validate([
             'file' => 'image|required|dimensions:ratio=1/1'
