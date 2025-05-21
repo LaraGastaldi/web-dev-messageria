@@ -15,6 +15,12 @@ class LoginForm extends Form
     #[Validate('required|string|email')]
     public string $email = '';
 
+    #[Validate('required')]
+    public string $username = '';
+    
+    #[Validate('required')]
+    public string $name = '';
+
     #[Validate('required|string')]
     public string $password = '';
 
