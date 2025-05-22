@@ -5,7 +5,7 @@ use App\Http\Controllers\View\MessagesController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
-    'middleware' => 'jwt.renew'
+    'middleware' => 'auth'
 ], function () {
     Route::get('/messages', [MessagesController::class, 'index'])->name('messages');
 });

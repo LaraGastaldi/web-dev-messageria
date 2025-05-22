@@ -5,33 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Resources\UserResource;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     protected $resource = UserResource::class;
-    protected function register(Request $request)
-    {
-        $data = $request->validate([
-            'username' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email:dns|max:255|unique:users',
-            'password' => 'required|string|min:6'
-        ]);
-
-        $toReturn = User::create($data);
-
-        if ($toReturn) {
-            return response()->json([
-                'token' => auth()->attempt([$data['email'], $data['password']]),
-                'message' => __('api.user.register.success')
-            ], 201);
-        }
-        return response()->json([
-            'error' => __('api.user.register.failed')
-        ], 401);
-    }
 
     protected function updateAvatar(Request $request)
     {

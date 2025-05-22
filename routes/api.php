@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
-    'middleware' => ['jwt.refresh'],
+    'middleware' => ['auth'],
 ], function ($router) {
     Route::post('me', [AuthController::class, 'me']);
     Route::patch('user/avatar', [UserController::class, 'updateAvatar']);

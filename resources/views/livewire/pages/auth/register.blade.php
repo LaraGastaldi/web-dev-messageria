@@ -1,43 +1,3 @@
-<?php
-
-use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Livewire\Attributes\Layout;
-use Livewire\Volt\Component;
-
-new #[Layout('layouts.guest')] class extends Component
-{
-    public string $name = '';
-    public string $email = '';
-    public string $username = '';
-    public string $password = '';
-    public string $password_confirmation = '';
-
-    /**
-     * Handle an incoming registration request.
-     */
-    public function register(): void
-    {
-        $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
-            'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
-        ]);
-
-        $validated['password'] = Hash::make($validated['password']);
-
-        event(new Registered($user = User::create($validated)));
-
-        Auth::login($user);
-
-        $this->redirect(route('messages'), true);
-    }
-} ?>
-
 <div>
     <form wire:submit="register">
         <div>
@@ -48,14 +8,14 @@ new #[Layout('layouts.guest')] class extends Component
         
         <div>
             <x-input-label for="username" :value="__('view.Username')" />
-            <x-text-input wire:model="form.email" id="username" class="block mt-1 w-full" type="text" name="username" />
-            <x-input-error :messages="$errors->get('form.username')" class="mt-2" />
+            <x-text-input wire:model="username" id="username" class="block mt-1 w-full" type="text" name="username" required />
+            <x-input-error :messages="$errors->get('username')" class="mt-2" />
         </div>
 
         <div>
             <x-input-label for="name" :value="__('view.Name')" />
-            <x-text-input wire:model="form.email" id="name" class="block mt-1 w-full" type="text" name="name" />
-            <x-input-error :messages="$errors->get('form.name')" class="mt-2" />
+            <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <div>

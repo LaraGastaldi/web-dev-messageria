@@ -15,4 +15,5 @@ return [
     'Remember me' => 'Lembrar de mim',
     'Forgot your password?' => 'Esqueceu a senha?',
     'Confirm Password' => 'Confirmar Senha',
+    'Messages' => 'Mensagens',
 ];
