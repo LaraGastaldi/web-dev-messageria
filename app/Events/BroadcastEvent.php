@@ -11,14 +11,14 @@ class BroadcastEvent implements ShouldBroadcast
 {
   use Dispatchable, InteractsWithSockets, SerializesModels;
 
-  public function __construct(public $message, public $on)
+  public function __construct(public $message, public $on, public $from)
   {
     //
   }
 
   public function broadcastOn()
   {
-    return [$this->on];
+    return ['chat.' . $this->on];
   }
 
   public function broadcastAs()
