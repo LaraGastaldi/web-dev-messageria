@@ -20,7 +20,7 @@ new #[Layout('layouts.guest')] class extends Component
 
         Session::regenerate();
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $this->redirectIntended(default: route('messages'), navigate: true);
     }
 }; ?>
 
@@ -36,20 +36,8 @@ new #[Layout('layouts.guest')] class extends Component
             <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
         </div>
 
-        <div>
-            <x-input-label for="username" :value="__('view.Username')" />
-            <x-text-input wire:model="form.email" id="username" class="block mt-1 w-full" type="text" name="username" />
-            <x-input-error :messages="$errors->get('form.username')" class="mt-2" />
-        </div>
-
-        <div>
-            <x-input-label for="name" :value="__('view.Name')" />
-            <x-text-input wire:model="form.email" id="name" class="block mt-1 w-full" type="text" name="name" />
-            <x-input-error :messages="$errors->get('form.name')" class="mt-2" />
-        </div>
-
         <!-- Password -->
-        <div class="mt-4">
+        <div>
             <x-input-label for="password" :value="__('view.Password')" />
 
             <x-text-input wire:model="form.password" id="password" class="block mt-1 w-full"
@@ -75,7 +63,7 @@ new #[Layout('layouts.guest')] class extends Component
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">
+            <x-primary-button>
                 {{ __('view.Log in') }}
             </x-primary-button>
         </div>

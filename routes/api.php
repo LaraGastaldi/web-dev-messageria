@@ -11,6 +11,10 @@ Route::group([
     Route::patch('user/avatar', [UserController::class, 'updateAvatar']);
 });
 
-Route::post('register', [UserController::class, 'register'])->withMiddleware('throttle:10,1');
+Route::group([
+    'middleware' => 'throttle:10,1',
+], function ($router) {
+    Route::post('register', [UserController::class, 'register']);
+});
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout']);
