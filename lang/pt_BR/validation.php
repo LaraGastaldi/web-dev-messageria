@@ -164,6 +164,11 @@ return [
     'ulid' => 'O campo :attribute deve ser um ULID válido.',
     'uuid' => 'O campo :attribute deve ser um UUID válido.',
 
+    'user_not_found' => 'Usuário não encontrado.',
+    'friend_request_pending' => 'Você já enviou um pedido de amizade à essa pessoa.',
+    'already_friends' => 'Você já é amigo dessa pessoa.',
+    'friend_request_blocked' => 'Você não pode mandar solicitação de amizade para essa pessoa.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

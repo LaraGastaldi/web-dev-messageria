@@ -16,4 +16,5 @@ return [
     'Forgot your password?' => 'Esqueceu a senha?',
     'Confirm Password' => 'Confirmar Senha',
     'Messages' => 'Mensagens',
+    'friend_request_sent' => 'Solicitação de amizade enviada!',
 ];

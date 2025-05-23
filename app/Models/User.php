@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -69,5 +71,22 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function getFriendsAddedAttribute()
+    {
+        $ids = Friend::where(function ($query) {
+            $query->where('user_id', $this->id)
+                ->orWhere('to_id', $this->id);
+        })->where('status', 'accepted')->get();
+
+        $filtered = $ids->map(function ($friend) {
+            if ($friend->user_id !== auth()->user()->id) {
+                return $friend->to_id;
+            } else {
+                return $friend->user_id;
+            }
+        });
+        return User::whereIn('id', $filtered)->get();
     }
 }
