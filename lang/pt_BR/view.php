@@ -17,4 +17,10 @@ return [
     'Confirm Password' => 'Confirmar Senha',
     'Messages' => 'Mensagens',
     'friend_request_sent' => 'Solicitação de amizade enviada!',
+    'Are you sure you want to logout?' => 'Você tem certeza de que deseja sair?',
+    'unread messages' => 'mensagens não lidas',
+    'Type at least 3 characters' => 'Digite ao menos 3 caracteres',
+    'No users found' => 'Nenhum usuário encontrado',
+    'Add friend' => 'Adicionar amigo',
+    'Send' => 'Enviar',
 ];

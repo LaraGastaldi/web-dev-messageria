@@ -51,14 +51,16 @@
                                 <li>
                                     <a class="dropdown-item position-relative" href="#">
                                         Notificações
+                                        @if ($requests->count() > 0)
                                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            99+
-                                            <span class="visually-hidden">unread messages</span>
+                                            {{ $requests->count() }}
+                                            <span class="visually-hidden">{{ __('view.unread messages') }}</span>
                                         </span>
+                                        @endif
                                     </a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                                <li><a class="dropdown-item">Logout</a></li>
                             </ul>
                         </div>
                     </div>

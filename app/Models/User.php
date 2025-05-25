@@ -82,11 +82,39 @@ class User extends Authenticatable implements JWTSubject
 
         $filtered = $ids->map(function ($friend) {
             if ($friend->user_id !== auth()->user()->id) {
-                return $friend->to_id;
-            } else {
                 return $friend->user_id;
+            } else {
+                return $friend->to_id;
             }
         });
         return User::whereIn('id', $filtered)->get();
+    }
+
+    public function getRequestsReceivedAttribute()
+    {
+        $ids = Friend::where('to_id', $this->id)
+            ->where('status', 'pending')->get();
+        
+        $filtered = $ids->map(function ($friend) {
+            return $friend->user_id;
+        });
+        return User::whereIn('id', $filtered)->get();
+    }
+
+    public function getFriendsCantAddAttribute()
+    {
+        $ids = Friend::where(function ($query) {
+            $query->where('user_id', $this->id)
+                ->orWhere('to_id', $this->id);
+        })->get();
+
+        $filtered = $ids->map(function ($friend) {
+            if ($friend->user_id !== auth()->user()->id) {
+                return $friend->user_id;
+            } else {
+                return $friend->to_id;
+            }
+        });
+        return $filtered->unique()->values()->all();
     }
 }

@@ -9,6 +9,7 @@ class MessagesController
         return view('pages.messages', [
             'channel' => auth()->user()->id,
             'friends' => auth()->user()->friendsAdded,
+            'requests' => auth()->user()->friendRequests ?? collect([]),
         ]);
     }
 }
