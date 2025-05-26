@@ -10,7 +10,7 @@ use Livewire\Component;
 class AddFriend extends Component
 {
     public $username;
-    public $found = [];
+    public $found = collect();
     public function addFriend()
     {
         $this->validate([
@@ -23,26 +23,7 @@ class AddFriend extends Component
                 'form.add-friend' => __('validation.user_not_found'),
             ]);
         }
-        $friendship = Friend::where('user_id', auth()->user()->id)
-            ->where('to_id', $friend->id)
-            ->orWhere('user_id', $friend->id)
-            ->first();
-        if ($friendship) {
-            if ($friendship->status == 'pending') {
-                throw ValidationException::withMessages([
-                    'form.add-friend' => __('validation.friend_request_pending'),
-                ]);
-            } elseif ($friendship->status == 'accepted') {
-                throw ValidationException::withMessages([
-                    'form.add-friend' => __('validation.already_friends'),
-                ]);
-            }
-            elseif ($friendship->status == 'blocked') {
-                throw ValidationException::withMessages([
-                    'form.add-friend' => __('validation.friend_request_blocked'),
-                ]);
-            }
-        }
+        $this->getFriendship($friend);
         $friendship = new Friend();
         $friendship->user_id = auth()->user()->id;
         $friendship->to_id = $friend->id;
@@ -86,6 +67,25 @@ class AddFriend extends Component
                 'form.add-friend' => __('validation.user_not_found'),
             ]);
         }
+        $this->getFriendship($friend);
+        $friendship = new Friend();
+        $friendship->user_id = auth()->user()->id;
+        $friendship->to_id = $friend->id;
+        $friendship->status = 'pending';
+        $friendship->save();
+        $this->dispatch('friendAdded', [
+            'type' => 'success',
+            'message' => __('validations.friend_request_sent'),
+        ]);
+        $this->username = '';
+        $this->found = [];
+        $this->dispatch('friendEmpty', [
+            'type' => 'success'
+        ]);
+    }
+
+    private function getFriendship($friend)
+    {
         $friendship = Friend::where('user_id', auth()->user()->id)
             ->where('to_id', $friend->id)
             ->orWhere('user_id', $friend->id)
@@ -106,20 +106,6 @@ class AddFriend extends Component
                 ]);
             }
         }
-        $friendship = new Friend();
-        $friendship->user_id = auth()->user()->id;
-        $friendship->to_id = $friend->id;
-        $friendship->status = 'pending';
-        $friendship->save();
-        $this->dispatch('friendAdded', [
-            'type' => 'success',
-            'message' => __('validations.friend_request_sent'),
-        ]);
-        $this->username = '';
-        $this->found = [];
-        $this->dispatch('friendEmpty', [
-            'type' => 'success'
-        ]);
     }
 
     public function render()
