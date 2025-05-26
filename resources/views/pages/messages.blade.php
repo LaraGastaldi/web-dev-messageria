@@ -81,11 +81,10 @@
                         <ul class="list-group">
                             @foreach ($friends as $friend)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
+                                    <a class="d-flex">
                                         <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #007bff; margin-right: 10px;"></div>
                                         <span>{{ $friend->username }}</span>
-                                    </div>
-                                    <button class="btn btn-primary btn-sm">Enviar Mensagem</button>
+                                    </a>
                                 </li>
                             @endforeach
                         </ul>
@@ -133,6 +132,7 @@ window.Pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
 var channel = window.Pusher.subscribe('chat.{{ $channel }}');
 channel.bind('message', function(data) {
     console.log(data);
+    $wire.emit('message', data);
     // Handle the message event
     // You can update the UI or perform any other actions here
 });

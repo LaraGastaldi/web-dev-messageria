@@ -4,6 +4,9 @@ use App\Http\Controllers\View\AuthController;
 use App\Http\Controllers\View\MessagesController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', function () {
+    return redirect()->route('messages');
+});
 Route::group([
     'middleware' => 'auth'
 ], function () {

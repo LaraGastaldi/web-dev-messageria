@@ -17,3 +17,5 @@
     <footer class="mt-auto text-white-50">
     </footer>
 </div>
+
+@endsection
